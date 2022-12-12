@@ -7,7 +7,11 @@ import MessageComponent from "./MessageComponent";
 import { Message } from "../typings";
 import { clientPusher } from "../pusher";
 
-function MessageList() {
+type Props = {
+  initialMessages: Message[];
+};
+
+function MessageList({ initialMessages }: Props) {
   const {
     data: messages,
     error,
@@ -22,17 +26,22 @@ function MessageList() {
 
       if (!messages) {
         await mutate(fetcher);
+      } else {
+        await mutate(fetcher, {
+          optimisticData: [data, ...messages!],
+          rollbackOnError: true,
+        });
       }
-      await mutate(fetcher, {
-        optimisticData: [data, ...messages!],
-        rollbackOnError: true,
-      });
     });
-  }, [messages, mutate]);
+    return () => {
+      channel.unbind_all();
+      channel.unsubscribe();
+    };
+  }, [messages, mutate, clientPusher]);
 
   return (
     <div className="space-y-5 px-5 pt-8 pb-32 max-w-2xl xl:max-w-4xl">
-      {messages?.map((message) => (
+      {(messages || initialMessages).map((message) => (
         <MessageComponent message={message} key={message.id} />
       ))}
     </div>
