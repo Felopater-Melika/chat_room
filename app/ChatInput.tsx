@@ -5,8 +5,13 @@ import { v4 as uuid } from "uuid";
 import { Message } from "../typings";
 import useSWR from "swr";
 import fetcher from "../utils/fetchMessages";
+import { unstable_getServerSession } from "next-auth";
 
-function ChatInput() {
+type Props = {
+  session: Awaited<ReturnType<typeof unstable_getServerSession>>;
+};
+
+function ChatInput({ session }: Props) {
   const [input, setInput] = useState("");
   const { data: messages, error, mutate } = useSWR("/api/getMessages", fetcher);
 
@@ -24,10 +29,10 @@ function ChatInput() {
     const message: Message = {
       id,
       message: messageToSend,
-      username: "Philopater Phoenix",
+      username: session?.user?.name!,
       created_at: Date.now(),
-      email: "philopater.phoenix@gmail.com",
-      profilePic: "https://links.papareact.com/jne",
+      email: session?.user?.email!,
+      profilePic: session?.user?.image!,
     };
 
     const uploadMessageToUpStash = async () => {
@@ -54,11 +59,13 @@ function ChatInput() {
         value={input}
         onChange={(e) => setInput(e.target.value)}
         placeholder="Enter message here..."
+        disabled={!session}
         type="text"
         className="flex-1 rounded border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent px-5 py-3 disabled:opacity-50 disabled:cursor-not-allowed"
       />
       <button
         type="submit"
+        disabled={!input}
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed"
       >
         Send

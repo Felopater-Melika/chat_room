@@ -2,6 +2,8 @@ import React from "react";
 import MessageList from "./MessageList";
 import ChatInput from "./ChatInput";
 import { Message } from "../typings";
+import { unstable_getServerSession } from "next-auth";
+import Providers from "./providers";
 
 async function HomePage() {
   const data = await fetch(
@@ -10,11 +12,15 @@ async function HomePage() {
 
   const messages: Message[] = data.messages;
 
+  const session = await unstable_getServerSession();
+
   return (
-    <main>
-      <MessageList initialMessages={messages} />
-      <ChatInput />
-    </main>
+    <Providers session={session}>
+      <main>
+        <MessageList initialMessages={messages} />
+        <ChatInput session={session} />
+      </main>
+    </Providers>
   );
 }
 

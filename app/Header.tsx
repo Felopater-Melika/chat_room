@@ -2,24 +2,24 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import LogoutButton from "./LogoutButton";
+import { unstable_getServerSession } from "next-auth/next";
 
-function Header() {
-  const session = true;
-
+async function Header() {
+  const session = await unstable_getServerSession();
   if (session) {
     return (
       <header className="sticky top-0 z-50 bg-white flex justify-between items-center p-10 shadow-sm">
         <div className="flex space-x-2 items-center">
           <Image
             src="https:/links.papareact.com/jne"
-            className="roundeed-full mx-2 object-contain"
+            className="rounded-full mx-2 object-contain"
             alt="pfp"
             height={10}
             width={50}
           />
           <div>
             <p>Logged in as:</p>
-            <p>Philopater Phoenix</p>
+            <p>{session.user?.image}</p>
           </div>
         </div>
         <LogoutButton />
