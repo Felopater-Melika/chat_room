@@ -10,10 +10,10 @@ async function SignInPage() {
       <div>
         <Image
           src="https:/links.papareact.com/161"
-          className="rounded-full mx-2 object-cover"
+          className="rounded-full mx-2 object-cover mb-20 "
           alt="pfp"
-          height={700}
-          width={700}
+          height={400}
+          width={400}
         />
       </div>
       <SignInComponent providers={providers} />

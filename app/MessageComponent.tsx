@@ -2,6 +2,7 @@ import React from "react";
 import { Message } from "../typings";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
+import TimeAgo from "react-timeago";
 
 type Props = {
   message: Message;
@@ -43,7 +44,7 @@ function MessageComponent({ message }: Props) {
               isUser && "text-right"
             }`}
           >
-            {new Date(message.created_at).toLocaleString()}
+            <TimeAgo date={message.created_at} />
           </p>
         </div>
       </div>

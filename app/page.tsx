@@ -2,7 +2,7 @@ import React from "react";
 import MessageList from "./MessageList";
 import ChatInput from "./ChatInput";
 import { Message } from "../typings";
-import { unstable_getServerSession } from "next-auth";
+import { unstable_getServerSession } from "next-auth/next";
 import Providers from "./providers";
 
 async function HomePage() {
