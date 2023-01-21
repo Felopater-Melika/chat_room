@@ -29,9 +29,12 @@ function ChatInput({ session }: Props) {
     const message: Message = {
       id,
       message: messageToSend,
+      // @ts-ignore
       username: session?.user?.name!,
       created_at: Date.now(),
+      // @ts-ignore
       email: session?.user?.email!,
+      // @ts-ignore
       profilePic: session?.user?.image!,
     };
 
