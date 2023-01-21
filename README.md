@@ -1,6 +1,9 @@
 # Messenger like chat app
 ## tech stack used:
 - Next.js
+- Typescript
+- React
+- React
 - NextAuth
 - Tailwind CSS
 - Upstash
