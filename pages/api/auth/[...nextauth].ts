@@ -1,6 +1,5 @@
 import NextAuth from "next-auth";
 import FacebookProvider from "next-auth/providers/facebook";
-import { signIn } from "next-auth/react";
 
 export const authOptions = {
   // Configure one or more authentication providers

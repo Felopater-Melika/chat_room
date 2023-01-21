@@ -1,4 +1,7 @@
 # Messenger like chat app
+![Alt text](./assets/img_1.png)
+![Alt text](./assets/img.png)
+
 ## tech stack used:
 - Next.js
 - Typescript
@@ -25,5 +28,4 @@
 - How to work with Upstash and store data in a database
 - How to use pusher to implement realtime message syncing
 ***
-##### To use the app use the following email and password
-###### Email: test_hsrlpep_user@tfbnw.net Password: rhj34q-29
+##### This app is currently not deployed because I can't authenticate users using Facebook because I need a privacy policy URL and a Data deletion instructions URL.
