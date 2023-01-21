@@ -9,7 +9,6 @@ export const authOptions = {
       clientId: process.env.FACEBOOK_CLIENT_ID!,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET!,
     }),
-    // ...add more providers here
   ],
   secret: process.env.NEXTAUTH_SECRET!,
   pages: {
