@@ -11,7 +11,8 @@ type Props = {
   initialMessages: Message[];
 };
 
-function MessageList({ initialMessages }: Props) {
+// function MessageList({ initialMessages }: Props) {
+function MessageList() {
   // const {
   //   data: messages,
   //   error,
