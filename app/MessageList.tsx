@@ -42,9 +42,9 @@ function MessageList({ initialMessages }: Props) {
 
   return (
     <div className="space-y-5 px-5 pt-8 pb-32 ">
-      {(messages || initialMessages).map((message) => (
-        <MessageComponent message={message} key={message.id} />
-      ))}
+      {/*{(messages || initialMessages).map((message) => (*/}
+      {/*  <MessageComponent message={message} key={message.id} />*/}
+      {/*))}*/} hi
     </div>
   );
 }
