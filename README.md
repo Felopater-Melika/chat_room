@@ -30,4 +30,4 @@
 - How to work with Upstash and store data in a database
 - How to use pusher to implement realtime message syncing
 ***
-##### This app uses Github for authentication not facebook because facebook requires a lot of steps to configure and basically just not good for small projects.
+##### Deployment doesn't work because of authentication issues. 
