@@ -24,28 +24,28 @@ function MessageComponent({ message }: Props) {
         />
       </div>
       <div>
-        <p
+        <div
           className={`text-[0.65rem] px-[2px] pb-[2px]  ${
             isUser ? "text-blue-400 text-right" : "text-red-400 text-left"
           } `}
         >
           {message.username}
-        </p>
+        </div>
         <div className="flex items-end">
           <div
             className={`px-3 py-2 rounded-lg w-fit text-white ${
               isUser ? "bg-blue-400 ml-auto order-2" : "bg-red-400"
             }`}
           >
-            <p>{message.message}</p>
+            <div>{message.message}</div>
           </div>
-          <p
+          <div
             className={`text-[0.65rem] italic px-2 text-gray-300 ${
               isUser && "text-right"
             }`}
           >
             <TimeAgo date={message.created_at} />
-          </p>
+          </div>
         </div>
       </div>
     </div>
