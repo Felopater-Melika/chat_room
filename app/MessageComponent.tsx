@@ -14,7 +14,7 @@ function MessageComponent({ message }: Props) {
 
   return (
     <div className={`flex w-fit ${isUser && "ml-auto"}`}>
-      <div className={`flex-shrink-0 ${isUser && "order-2"}`}>
+      {/*<div className={`flex-shrink-0 ${isUser && "order-2"}`}>*/}
       {/*  <Image*/}
       {/*    src={message.profilePic}*/}
       {/*    alt="pfp"*/}
@@ -48,7 +48,7 @@ function MessageComponent({ message }: Props) {
       {/*    </div>*/}
       {/*  </div>*/}
       {/*</div>*/}
-        hi
+      hi
     </div>
   );
 }
