@@ -1,6 +1,8 @@
 # Messenger like chat app
-![Alt text](./assets/img_1.png)
-![Alt text](./assets/img.png)
+
+[//]: # (![Alt text]&#40;./assets/img_1.png&#41;)
+
+[//]: # (![Alt text]&#40;./assets/img.png&#41;)
 
 ## tech stack used:
 - Next.js
@@ -28,4 +30,4 @@
 - How to work with Upstash and store data in a database
 - How to use pusher to implement realtime message syncing
 ***
-##### This app is currently not deployed because I can't authenticate users using Facebook because I need a privacy policy URL and a Data deletion instructions URL.
+##### This app uses Github for authentication not facebook because facebook requires a lot of steps to configure and basically just not good for small projects.
