@@ -33,7 +33,7 @@ function MessageList({ initialMessages }: Props) {
       channel.unbind_all();
       channel.unsubscribe();
     };
-  }, [messages, refetch, clientPusher]);
+  }, [ refetch]);
 
   return (
       <div className="space-y-5 px-5 pt-8 pb-32 ">
