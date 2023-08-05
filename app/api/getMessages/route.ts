@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
       .sort((a, b) => b.created_at - a.created_at);
 
 
-  console.log('in get', messages);
+  console.log('in get messages:', messages);
 
   return NextResponse.json({ messages }, { status: 200 });
 }
