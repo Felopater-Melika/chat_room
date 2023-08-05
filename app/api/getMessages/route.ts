@@ -20,5 +20,8 @@ export async function GET(request: NextRequest) {
       .map((message) => JSON.parse(message))
       .sort((a, b) => b.created_at - a.created_at);
 
+
+  console.log('in get', messages);
+
   return NextResponse.json({ messages }, { status: 200 });
 }
