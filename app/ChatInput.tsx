@@ -5,10 +5,10 @@ import { v4 as uuid } from "uuid";
 import { Message } from "../typings";
 import useSWR from "swr";
 import fetcher from "../utils/fetchMessages";
-import { unstable_getServerSession } from "next-auth/next";
+import {getServerSession} from "next-auth/next";
 
 type Props = {
-  session: Awaited<ReturnType<typeof unstable_getServerSession>>;
+  session: Awaited<ReturnType<typeof getServerSession>>;
 };
 
 function ChatInput({ session }: Props) {
@@ -53,10 +53,11 @@ function ChatInput({ session }: Props) {
       rollbackOnError: true,
     });
   };
+
   return (
     <form
       onSubmit={addMessage}
-      className="fixed bottom-0 z-50 w-full flex px-10 py-5 space-x-2 border-t border-gray-100 bg-white"
+      className="fixed bottom-0 z-50 w-full flex px-10 py-5 space-x-2 border-t border-gray-100 bg-gray-900"
     >
       <input
         value={input}

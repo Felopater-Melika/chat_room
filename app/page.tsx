@@ -4,15 +4,19 @@ import ChatInput from "./ChatInput";
 import { Message } from "../typings";
 import { getServerSession } from "next-auth/next";
 import Providers from "./providers";
+import redis from "../redis";
 
 async function HomePage() {
-  const data = await fetch(
-    `${process.env.VERCEL_URL || "http://localhost:3000"}/api/getMessages`
-  ).then((res) => res.json());
 
-  const messages: Message[] = data.messages;
+  const messagesRes = await redis.hvals("messages");
+  const messages: Message[] = messagesRes
+      .map((message: any) => JSON.parse(message).message)
+      .sort((a: any, b: any) => b.created_at - a.created_at);
+
+
 
   const session = await getServerSession();
+
   return (
     <Providers session={session}>
       <main>

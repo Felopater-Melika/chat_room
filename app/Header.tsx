@@ -8,7 +8,7 @@ async function Header() {
   const session = await getServerSession();
   if (session) {
     return (
-      <header className="sticky top-0 z-50 bg-white flex justify-between items-center p-10 shadow-sm">
+      <header className="sticky top-0 z-50 bg-gray-900 flex justify-between items-center  p-10 shadow-sm">
         <div className="flex space-x-2 items-center">
           <Image
             src={session.user?.image!}
@@ -17,7 +17,7 @@ async function Header() {
             height={10}
             width={50}
           />
-          <div>
+          <div className='text-white'>
             <p>Logged in as:</p>
             <p>{session.user?.name}</p>
           </div>

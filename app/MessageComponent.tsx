@@ -4,11 +4,9 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 import TimeAgo from "react-timeago";
 
-type Props = {
-  message: Message;
-};
 
-function MessageComponent({ message }: Props) {
+
+function MessageComponent({ message }: any) {
   const { data: session } = useSession();
   const isUser = session?.user?.email === message.email;
 
