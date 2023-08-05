@@ -16,6 +16,20 @@ function ChatInput({ session }: Props) {
   const queryClient = useQueryClient();
 
   const mutation = useMutation(sendMessages, {
+    onMutate: async (newMessage) => {
+      // Snapshot the previous value
+      const previousMessages = queryClient.getQueryData<Message[]>(['messages']);
+
+      // Optimistically update to the new value
+      // @ts-ignore
+      queryClient.setQueryData(['messages'], old => old ? [...old, newMessage] : [newMessage]);
+
+      return { previousMessages };
+    },
+    onError: (err, newMessage, context) => {
+      // Rollback to the previous value if the mutation fails
+      queryClient.setQueryData(['messages'], context?.previousMessages);
+    },
     onSuccess: () => {
       queryClient.invalidateQueries(['messages']);
     },
@@ -27,7 +41,6 @@ function ChatInput({ session }: Props) {
     if (!input || !session) return;
 
     const messageToSend = input;
-
     setInput('');
 
     const id = uuid();
@@ -35,40 +48,20 @@ function ChatInput({ session }: Props) {
     const message: Message = {
       id,
       message: messageToSend,
-    // @ts-ignore
+      // @ts-ignore
       username: session?.user?.name!,
       created_at: Date.now(),
-    // @ts-ignore
+      // @ts-ignore
       email: session?.user?.email!,
-    // @ts-ignore
+      // @ts-ignore
       profilePic: session?.user?.image!,
     };
 
     mutation.mutate(message);
   };
 
-  return (
-      <form
-          onSubmit={sendMessage}
-          className='fixed bottom-0 z-50 w-full flex px-10 py-5 space-x-2 border-t border-gray-100 bg-gray-900'
-      >
-        <input
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder='Enter message here...'
-            disabled={!session}
-            type='text'
-            className='flex-1 rounded border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent px-5 py-3 disabled:opacity-50 disabled:cursor-not-allowed'
-        />
-        <button
-            type='submit'
-            disabled={!input}
-            className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed'
-        >
-          Send
-        </button>
-      </form>
-  );
+  // rest of the component
 }
+
 
 export default ChatInput;
