@@ -12,6 +12,7 @@ async function HomePage() {
     const res = await fetch(`${process.env.VERCEL_URL}/api/getMessages`, {cache: 'no-cache'})
     const messagesJSON = await res.json();
     console.log('in MSG',messagesJSON);
+    // @ts-ignore
     const messages: Message[] = messagesJSON.messages.sort((a, b) => b.created_at - a.created_at);
     // const messagesJSON = await redis.zrange("messages", 0, -1);
     // const messages: Message[] = messagesJSON
