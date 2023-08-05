@@ -32,10 +32,10 @@ function MessageList({ initialMessages }: Props) {
       channel.unsubscribe();
     };
   }, [messages, refetch, clientPusher]);
-if (isFetching) return <h1>Loading...</h1>;
+
   return (
       <div className="space-y-5 px-5 pt-8 pb-32 ">
-        {messages?.map((message) => (
+        {(messages || initialMessages).map((message) => (
             <MessageComponent message={message} key={message.id} />
         ))}
       </div>
