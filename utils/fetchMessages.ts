@@ -1,11 +1,8 @@
+import axios from "axios";
 import { Message } from "../typings";
 
-const fetcher = async () => {
-  const res = await fetch("/api/getMessages");
-  const data = await res.json();
-  const messages: Message[] = data.messages;
-  console.log('in fetcher',messages)
-  return messages;
+export const fetchMessages = async (): Promise<Message[]> => {
+  const res = await axios.get("/api/getMessages");
+  console.log('in fetcher',res.data.messages)
+  return res.data.messages;
 };
-
-export default fetcher;

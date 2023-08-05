@@ -8,11 +8,10 @@ import redis from "../redis";
 
 async function HomePage() {
 
-  const messagesRes = await redis.hvals("messages");
-  const messages: Message[] = messagesRes
-      .map((message: any) => JSON.parse(message).message)
-      .sort((a: any, b: any) => b.created_at - a.created_at);
-
+    const messagesJSON = await redis.zrange("messages", 0, -1);
+    const messages: Message[] = messagesJSON
+        .map((message) => JSON.parse(message))
+        .sort((a, b) => b.created_at - a.created_at);
 
 
   const session = await getServerSession();

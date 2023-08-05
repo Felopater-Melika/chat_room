@@ -15,10 +15,10 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ body: "Method not allowed" }, { status: 405});
   }
 
-  const messagesRes = await redis.hvals("messages");
-  const messages: Message[] = messagesRes
-    .map((message) => JSON.parse(message).message)
-    .sort((a, b) => b.created_at - a.created_at);
+  const messagesJSON = await redis.zrange("messages", 0, -1);
+  const messages: Message[] = messagesJSON
+      .map((message) => JSON.parse(message))
+      .sort((a, b) => b.created_at - a.created_at);
 
   return NextResponse.json({ messages }, { status: 200 });
 }

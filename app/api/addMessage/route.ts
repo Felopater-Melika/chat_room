@@ -13,20 +13,21 @@ type ErrorData = {
 
 export async function POST(request: NextRequest) {
   if (request.method !== "POST") {
-    return NextResponse.json({ body: "Method Not Allowed" }, { status: 405 })
+    return NextResponse.json({ body: "Method Not Allowed" }, { status: 405 });
   }
 
-  const message = await request.json()
-
+  const { message } = await request.json();
   const newMessage = {
     ...message,
     created_at: Date.now(),
   };
 
-  console.log('in add',newMessage)
+  console.log('in add', newMessage);
 
-  await redis.hset("messages", message.id, JSON.stringify(newMessage));
+  // Use the timestamp as the score and the JSON string of the message as the member in the sorted set.
+  await redis.zadd("messages", newMessage.created_at.toString(), JSON.stringify(newMessage));
+
   await serverPusher.trigger("messages", "new-message", newMessage);
 
-  NextResponse.json({ message: newMessage }, { status: 200 });
+  return NextResponse.json({ message: newMessage }, { status: 200 });
 }

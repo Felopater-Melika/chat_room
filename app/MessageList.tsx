@@ -1,11 +1,10 @@
-"use client";
-
+'use client';
 import React, { useEffect } from "react";
-import useSWR from "swr";
-import fetcher from "../utils/fetchMessages";
-import MessageComponent from "./MessageComponent";
 import { Message } from "../typings";
 import { clientPusher } from "../pusher";
+import { fetchMessages } from "../utils/fetchMessages";
+import MessageComponent from "./MessageComponent";
+import {useQuery} from "@tanstack/react-query";
 
 type Props = {
   initialMessages: Message[];
@@ -15,37 +14,31 @@ function MessageList({ initialMessages }: Props) {
   const {
     data: messages,
     error,
-    mutate,
-  } = useSWR<Message[]>("/api/getMessages", fetcher);
+    refetch,
+    isFetching
+  } = useQuery<Message[]>(['messages'], fetchMessages);
 
   useEffect(() => {
     const channel = clientPusher.subscribe("messages");
 
-    channel.bind("new-message", async (data: Message) => {
-      if (messages?.find((message) => message.id === data.id)) return;
+    channel.bind("new-message", (data: Message) => {
+      if (messages?.find((message: Message) => message.id === data.id)) return;
 
-      if (!messages) {
-        await mutate(fetcher);
-      } else {
-        await mutate(fetcher, {
-          optimisticData: [data, ...messages!],
-          rollbackOnError: true,
-        });
-      }
+      refetch();
     });
 
     return () => {
       channel.unbind_all();
       channel.unsubscribe();
     };
-  }, [messages, mutate, clientPusher]);
+  }, [messages, refetch, clientPusher]);
 
   return (
-    <div className="space-y-5 px-5 pt-8 pb-32 ">
-      {(messages || initialMessages).map((message) => (
-        <MessageComponent message={message} key={message.id} />
-      ))}
-    </div>
+      <div className="space-y-5 px-5 pt-8 pb-32 ">
+        {(messages || initialMessages).map((message) => (
+            <MessageComponent message={message} key={message.id} />
+        ))}
+      </div>
   );
 }
 
