@@ -24,3 +24,5 @@
 - Middle ware redirection
 - Sessions
 - Time Stamps
+
+this app currently doesn't work on Vercel, but it works perfectly locally.
