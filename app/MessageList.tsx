@@ -24,6 +24,8 @@ function MessageList({ initialMessages }: Props) {
     channel.bind("new-message", (data: Message) => {
       if (messages?.find((message: Message) => message.id === data.id)) return;
 
+      console.log("new message", data);
+
       refetch();
     });
 
